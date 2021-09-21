@@ -1,0 +1,20 @@
+{
+    "cogs":[
+        {
+            "filename": "cog_loader",
+            "critical": 1
+        },
+        {
+            "filename": "error_handleing",
+            "critical": 1
+        },
+        {
+            "filename": "simple_commands_cog",
+            "critical": 0
+        },
+        {
+            "filename": "server_commands",
+            "critical": 0
+        }
+    ]
+}
