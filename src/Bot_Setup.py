@@ -1,6 +1,7 @@
 import discord, json
+import cog_loader
 from discord.ext import commands
-
+from pathlib import Path
 
 intents = discord.Intents.default()
 intents.members = True
@@ -9,69 +10,34 @@ intents.reactions = True
 client = commands.Bot(command_prefix="!", case_insensitive=True, intents=intents)
 
 
-def sub_cog_loader(Cogs):
-    for Cog in Cogs['cogs']:
-        CogName = Cog['filename']
-        Iscritical = Cog['critical']
-        try:
-            print(f"Loading {CogName}")
-            client.load_extension(f'Cogs.{CogName}')
-        except discord.ext.commands.errors.NoEntryPointError:
-            print(f"'{CogName}' has no setup function")
-        except discord.ext.commands.errors.ExtensionAlreadyLoaded:
-            print(f"'{CogName}' is already loaded")
-        except discord.ext.commands.errors.ExtensionNotFound:
-            if Iscritical:
-                raise SystemExit(f'WARNING: Missing critical file "{CogName}"')
-            print(f"'{CogName}' couldn't be found")
-        except Exception as error:
-            if Iscritical:
-                raise SystemExit(
-                    f'ERROR: Critical file "{CogName}" has met an unexpected error {error}')
-            print(f"'{CogName}' met a unexpected error {error}")
-        else:
-            print("Success")
 
+def token_handle():
+    
+    token_config_folder = Path("/etc/celest_bot")
+    token_config_file = Path("/etc/celest_bot/config.json")
+    
+    if token_config_file.exists():
+        with open("/etc/celest_bot/config.json", "r") as config_file:
+            config = json.load(config_file)
+        return config.get("TOKEN")
 
+    token_config_folder.mkdir(exist_ok=True)
+    
+    token = str(input(f"Hello, it seems your bot still doesn't have defined token "
+                      f"please input it here: "))
+    
+    token_data = {}
+    token_data["TOKEN"] = token
 
-def cog_loader(Cogs):
-    for Cog in Cogs['cogs']:
-        CogName = Cog['filename']
-        Iscritical = Cog['critical']
-        try:
-            print(f"Loading {CogName}")
-            client.load_extension(f'Cogs.{CogName}')
-        except discord.ext.commands.errors.NoEntryPointError:
-            print(f"'{CogName}' has no setup function")
-        except discord.ext.commands.errors.ExtensionAlreadyLoaded:
-            print(f"'{CogName}' is already loaded")
-        except discord.ext.commands.errors.ExtensionNotFound:
-            if Iscritical:
-                raise SystemExit(f'ERROR: Missing critical file "{CogName}"')
-            print(f"'{CogName}' couldn't be found")
-        except Exception as error:
-            if Iscritical:
-                raise SystemExit(f'ERROR: Critical file "{CogName}" has met an unexpected error {error}')
-            print(f"'{CogName}' met a unexpected error {error}")
-        else:
-            print("Success")
-
+    with open("/etc/celest_bot/config.json", "w+") as config_file:
+        json.dump(token_data, config_file)
+    return token
 
 
 def Set_up():
-    
-    try:
-        with open("src\Cogs\.Cogs", "r") as coglist:
-            coglist = json.load(coglist)
-    except FileNotFoundError:
-        raise SystemExit("Missing the 'Cogs' manifest File in Cogs folder")
         
-    cog_loader(coglist)
-        
-    print(client.extensions)
-    with open("tokens/token.txt", "r") as token:
-        token = str(token.read())
-    
+    cog_loader.load_cogs(client)
+    token = token_handle()
     client.run(token)
 
 
@@ -79,10 +45,10 @@ def Set_up():
 
 @client.event
 async def on_ready():
-    print(f"""\n Bot named: {client.user.name}\n
-    Started up correctly\n
-    ---------------------------------\n
-    """)
+    print(
+    f"\n      Bot named: {client.user.name}\n"
+    f"        Started up correctly\n"
+    f"------------------------------------\n")
 
 
 if __name__ == "__main__":
