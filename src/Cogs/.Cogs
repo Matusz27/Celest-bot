@@ -1,15 +1,35 @@
 {
     "cogs":[
         {
-            "filename": "cog_loader",
+            "filename": "cog_commands",
             "critical": 1
         },
         {
-            "filename": "error_handleing",
+            "filename": "simple_commands",
             "critical": 1
         },
         {
-            "filename": "simple_commands_cog",
+            "filename": "error_handle",
+            "critical": 1
+        },
+        {
+            "filename": "greeter",
+            "critical": 0
+        },
+        {
+            "filename": "hugs_counter",
+            "critical": 0
+        },
+        {
+            "filename": "message_cleaner",
+            "critical": 0
+        },
+        {
+            "filename": "pictures_commands",
+            "critical": 0
+        },
+        {
+            "filename": "play_commands",
             "critical": 0
         },
         {

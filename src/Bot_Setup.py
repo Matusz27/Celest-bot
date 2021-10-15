@@ -1,7 +1,6 @@
-import discord, json
+import discord
 import cog_loader, config
 from discord.ext import commands
-from pathlib import Path
 
 intents = discord.Intents.default()
 intents.members = True

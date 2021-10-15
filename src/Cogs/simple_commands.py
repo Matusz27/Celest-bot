@@ -32,7 +32,7 @@ class Simple_commands(commands.Cog):
         msg = " ".join(["Chirp!" for _ in range(amount)])
         await ctx.send(msg)
         
-    @commands.command(aliases=['Rax'])
+    @commands.command()
     async def Rax_stream(self, ctx):
         await ctx.send("https://picarto.tv/Disregard67")
 
