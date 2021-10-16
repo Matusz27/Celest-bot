@@ -19,7 +19,7 @@ def Set_up():
 @client.event
 async def on_ready():
     print(
-    f"\n      Bot named: {client.user.name}\n"
+    f"\n      Bot named: {client.user.name}\n  V.2.0"
     f"        Started up correctly\n"
     f"------------------------------------\n")
 
