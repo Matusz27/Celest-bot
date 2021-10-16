@@ -17,7 +17,7 @@ class Error(commands.Cog):
             await ctx.send("You're trying to use not existing command, check your spelling cutie", delete_after=8)
         elif isinstance(error, commands.CommandOnCooldown):
             Cooldown = error.retry_after
-            await ctx.send(f"You're using this command too much! You need to wait {Cooldown}!", delete_after=8)
+            await ctx.send(f"You're using this command too much! You need to wait {Cooldown:.2f}s!", delete_after=8)
 
 
 

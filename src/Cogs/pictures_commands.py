@@ -13,14 +13,13 @@ class pictures(commands.Cog):
 
     @commands.command()
     async def headbob(self, ctx, time: int = -1):
-        file_dir = "Pictures/image0.gif"
-        file = discord.File(file_dir, filename="Headbob.gif")
+        #file_dir = "Pictures/image0.gif"
+        #file = discord.File(file_dir, filename="Headbob.gif")
         await ctx.message.delete()
-        if time == -1:
-            await ctx.channel.send(file=file)
-            time = "Forever"
-        else:
-            await ctx.channel.send(file=file, delete_after=time)
+        #if time == -1:
+            #await ctx.channel.send(file=file)
+        #else:
+            #await ctx.channel.send(file=file, delete_after=time)
 
 
 def setup(client):

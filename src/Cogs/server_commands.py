@@ -1,4 +1,5 @@
-import socket, urllib.request
+import socket, requests
+import database_handle
 from discord.ext import commands
 
 
@@ -10,27 +11,27 @@ class Server_commands(commands.Cog):
     @commands.command()
     async def servers(self, ctx):
 
+        await ctx.send("Please wait, Checking...")
+        
         a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        external_ip = urllib.request.urlopen(
-            'https://ident.me').read().decode('utf8')
-
-        location1 = ("127.0.0.1", 53643)
-        location2 = ("192.168.1.17", 25565)
-
-        result_of_check1 = a_socket.connect_ex(location1)
-        result_of_check2 = a_socket.connect_ex(location2)
-
-        msg = "Servers that are up: \n \n"
-
-        if result_of_check1 == 0:
-            msg += f"""Byond is up! \nURL: byond://{external_ip}:53643\n \n"""
-        else:
-            msg += f"""Byond is down! \n \n"""
-
-        if result_of_check2 == 0:
-            msg += f"""Minecraft is up! \nIP: {external_ip}:25565"""
-        else:
-            msg += f"""Minecraft is down!"""
+        
+        external_ip = requests.get('https://ident.me').text
+        
+        list_of_servers = database_handle.fetch_servers()   
+        
+        msg = "Servers Status: \n \n"
+        
+        for server in list_of_servers:
+            
+            await ctx.send(f"Checking status of {server['name']}...")
+            
+            location = (server['ip'], server['port'])
+            result_of_check = a_socket.connect_ex(location)
+            
+            if result_of_check == 0:
+                msg += f"""{server['name']} Online!\n {external_ip}:{server['port']}\n\n"""
+                continue
+            msg += f"""{server['name']} Offline!\n\n"""
             
         a_socket.close()
         await ctx.send(msg)

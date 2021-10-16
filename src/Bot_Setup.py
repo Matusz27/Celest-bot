@@ -1,5 +1,6 @@
 import discord
-import cog_loader, config
+import cog_loader
+from config import config
 from discord.ext import commands
 
 intents = discord.Intents.default()

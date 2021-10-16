@@ -1,3 +1,4 @@
+from discord.enums import PremiumType
 from discord.ext import commands
 
 
@@ -39,9 +40,12 @@ class Cogs_handle(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def restart(self, ctx):
-        for cog in self.client.extensions:
-            self.client.reload_extension(f'Cogs.{cog}')
-        await ctx.send("I restarted myself!", delete_after=8)
+        cog_list = [cog for cog in self.client.extensions]
+        for cog in cog_list:
+            if cog == "Cogs.cog_commands":
+                continue
+            self.client.reload_extension(f'{cog}')
+        await ctx.send("I restarted myself!")
         
 
 def setup(client):
