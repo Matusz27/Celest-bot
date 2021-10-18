@@ -60,3 +60,10 @@ with conn:
                 f"Select * from hugs")
             data = cursor.fetchall()
             return data
+
+    def add_hug_recipiant(person):
+        with conn.cursor() as cursor:
+            cursor.execute(
+                f"INSERT INTO hugs (name) VALUES ('{person}')")
+            conn.commit()
+        return

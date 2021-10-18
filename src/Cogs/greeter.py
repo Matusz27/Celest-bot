@@ -16,8 +16,7 @@ class goodbyer_and_greeter(commands.Cog):
         guild = member.guild.id
         if guild == 441772481481670656:
             Rules1 = self.client.get_channel(491690394069893120)
-            Rules2 = self.client.get_channel(
-                608836659206684713)  # thoes get the channels
+            Rules2 = self.client.get_channel(608836659206684713)
             Roles = self.client.get_channel(650243960274550805)
             World = self.client.get_channel(623919121439916050)
             guild = (member.guild)
@@ -31,14 +30,10 @@ class goodbyer_and_greeter(commands.Cog):
         guild = member.guild.id
         if guild == 441772481481670656:
             guild = (member.guild)
-            msg1 = f"Aw... {member.mention} left! Without them, there are now {guild.member_count} members. \n" \
+            msg = f"Aw... {member.nick} left! Without them, there are now {guild.member_count} members. \n" \
                 f"Hopefuly they will be back soon!"
-            invite = await guild.invites()
-            invite = invite[0].url
-            msg2 = f"Hey, you left, if you wanna come back here is the invite ^v^ \n \n {invite}"
             channel = self.client.get_channel(472078798251360266)
-            await channel.send(msg1)
-            await member.send()
+            await channel.send(msg)
 
 
 def setup(client):
