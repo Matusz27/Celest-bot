@@ -3,23 +3,28 @@ import discord
 from discord.ext import commands
 
 
-#remember to rewrite it to be able to save pictures and be able to display them so there can be infinite 
-#amount of pictures that can be displayed with it, aka sticker bot
-
 class pictures(commands.Cog):
 
     def __init__(self, client):
         self.client = client
 
     @commands.command()
-    async def headbob(self, ctx, time: int = -1):
-        #file_dir = "Pictures/image0.gif"
-        #file = discord.File(file_dir, filename="Headbob.gif")
+    async def pic(self, ctx, file="headbob"):
+        
+        
+        file = discord.File(filename="Headbob.gif")
+        
         await ctx.message.delete()
-        #if time == -1:
-            #await ctx.channel.send(file=file)
-        #else:
-            #await ctx.channel.send(file=file, delete_after=time)
+        await ctx.channel.send(file=file)
+
+    @commands.command()
+    async def pic_add(self, ctx, file):
+
+        file = ctx.attachment
+
+        await ctx.message.delete()
+        await ctx.channel.send(file=file)
+
 
 
 def setup(client):
