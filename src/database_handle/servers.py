@@ -1,4 +1,3 @@
-import psycopg2
 import psycopg2.extras
 from database_handle import conn
 

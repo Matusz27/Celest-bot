@@ -1,4 +1,3 @@
-import psycopg2
 import psycopg2.extras
 from database_handle import conn
 
@@ -14,7 +13,8 @@ with conn:
     def check_for_hug_recipiant(person):
 
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT name FROM hugs WHERE name LIKE '{person}'", )
+            sql = "SELECT name FROM hugs WHERE name LIKE %s"
+            cursor.execute(sql, (person,))
             data = cursor.fetchone()
             if not data:
                 return False    
@@ -23,8 +23,8 @@ with conn:
 
     def increment_hug(person):
         with conn.cursor() as cursor:
-            cursor.execute(
-                f"UPDATE hugs SET amount = amount + 1 WHERE name LIKE '{person}'")
+            sql = "UPDATE hugs SET amount = amount + 1 WHERE name LIKE %s"
+            cursor.execute(sql, (person,))
             conn.commit()
         return
 
@@ -33,8 +33,8 @@ with conn:
         
         if person:
            with conn.cursor() as cursor:
-            cursor.execute(
-                f"Select amount from hugs WHERE name LIKE '{person}'")
+            sql = "Select amount from hugs WHERE name LIKE %s"
+            cursor.execute(sql, (person,))
             data = cursor.fetchone()
             return data
         
@@ -46,7 +46,7 @@ with conn:
 
     def add_hug_recipiant(person):
         with conn.cursor() as cursor:
-            cursor.execute(
-                f"INSERT INTO hugs (name) VALUES ('{person}')")
+            sql = "INSERT INTO hugs (name) VALUES (%s)"
+            cursor.execute(sql, (person,))
             conn.commit()
         return
