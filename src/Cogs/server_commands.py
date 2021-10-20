@@ -1,5 +1,5 @@
 import socket, requests
-import database_handle
+from database_handle import servers
 from discord.ext import commands
 
 
@@ -17,7 +17,7 @@ class Server_commands(commands.Cog):
         
         external_ip = requests.get('https://ident.me').text
         
-        list_of_servers = database_handle.fetch_servers()   
+        list_of_servers = servers.fetch_servers()   
         
         msg = "Servers Status: \n \n"
         

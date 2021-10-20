@@ -1,25 +1,8 @@
 import psycopg2
 import psycopg2.extras
-from config import config
-
-
-
-DB_HOST = config.DB_HOST
-DB_NAME = config.DB_NAME
-DB_USER = config.DB_USER
-DB_PASSWORD = config.DB_PASS
-
-conn = psycopg2.connect(dbname = DB_NAME, user = DB_USER, password = DB_PASSWORD, host = DB_HOST)
+from database_handle import conn
 
 with conn:
-    
-    def fetch_servers():
-        
-        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-            cursor.execute("Select * from servers")
-            data = cursor.fetchall()
-        return data
-
 
     def fetch_hug_recipants():
         with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:

@@ -1,4 +1,4 @@
-import discord
+import discord, imghdr
 
 from discord.ext import commands
 
@@ -20,10 +20,13 @@ class pictures(commands.Cog):
     @commands.command()
     async def pic_add(self, ctx, file):
 
-        file = ctx.attachment
-
-        await ctx.message.delete()
-        await ctx.channel.send(file=file)
+        attachment = ctx.message.attachments[0].read
+        if not imghdr.what(attachment):
+            ctx.send("The file is not acceptable image")
+            return
+        
+        
+        
 
 
 

@@ -1,4 +1,4 @@
-import database_handle
+from database_handle import hugs as hugs_db
 from discord.ext import commands
 
 
@@ -10,7 +10,7 @@ class hugs_handle(commands.Cog):
 
     @staticmethod
     async def rejection(ctx, msg):
-        recipiants = database_handle.fetch_hug_recipants()
+        recipiants = hugs_db.fetch_hug_recipants()
         msg += "\nYou can hug:\n"
         for number, recipiant in enumerate(recipiants):
             msg += f"{number + 1}.  {recipiant['name'].capitalize()}\n"
@@ -28,13 +28,13 @@ class hugs_handle(commands.Cog):
         
         person = person.lower()
         
-        if not database_handle.check_for_hug_recipiant(person):
+        if not hugs_db.check_for_hug_recipiant(person):
             await hugs_handle.rejection(ctx, "I didn't found who you're looking for")
             return
     
-        database_handle.increment_hug(person)
+        hugs_db.increment_hug(person)
         
-        hugs_after_addition = database_handle.fetch_hugs(person)
+        hugs_after_addition = hugs_db.fetch_hugs(person)
         
         msg = f"You hugged {person.capitalize()}! They were hugged {hugs_after_addition[0]} times!"
         await ctx.send(msg)
@@ -43,16 +43,16 @@ class hugs_handle(commands.Cog):
     async def hugs(self, ctx, person=None):
         
         if person is None:
-            hugs = database_handle.fetch_hugs()
+            hugs = hugs_db.fetch_hugs()
             msg = "Pepole that were hugged and can be hugged!\n\n"
             hugs_sorted = sorted(hugs, key=lambda d: d['amount'], reverse=True)
             for person in hugs_sorted:
                 msg += f"{person['name'].capitalize()} was hugged {person['amount']} times!\n"
         else:
-            if not database_handle.check_for_hug_recipiant(person):
+            if not hugs_db.check_for_hug_recipiant(person):
                 ctx.send("They aren't huggable yet! Or you spelled it wrong cutie~")
                 return
-            hugs = database_handle.fetch_hugs(person)
+            hugs = hugs_db.fetch_hugs(person)
             msg = f"{person.capitalize()} was hugged {hugs[0]['amount']} times!"
         
         await ctx.send(msg)
@@ -67,11 +67,11 @@ class hugs_handle(commands.Cog):
 
         person = person.lower()
 
-        if database_handle.check_for_hug_recipiant(person):
+        if hugs_db.check_for_hug_recipiant(person):
             await ctx.send("They are already signed up for snuggling!")
             return
 
-        database_handle.add_hug_recipiant(person)
+        hugs_db.add_hug_recipiant(person)
 
         msg = f"You added {person.capitalize()}! They are now huggable!"
         await ctx.send(msg)
