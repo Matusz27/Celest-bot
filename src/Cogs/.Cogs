@@ -2,39 +2,66 @@
     "cogs":[
         {
             "filename": "cog_commands",
-            "critical": 1
+            "critical": 1,
+            "is_module": 0
         },
         {
             "filename": "simple_commands",
-            "critical": 1
+            "critical": 1,
+            "is_module": 0
         },
         {
             "filename": "error_handle",
-            "critical": 1
+            "critical": 1,
+            "is_module": 0
         },
         {
             "filename": "greeter",
-            "critical": 0
+            "critical": 0,
+            "is_module": 0
         },
         {
             "filename": "hugs_counter",
-            "critical": 0
+            "critical": 0,
+            "is_module": 0
         },
         {
             "filename": "message_cleaner",
-            "critical": 0
+            "critical": 0,
+            "is_module": 0
         },
         {
             "filename": "pictures_commands",
-            "critical": 0
+            "critical": 0,
+            "is_module": 0
         },
         {
             "filename": "play_commands",
-            "critical": 0
+            "critical": 0,
+            "is_module": 0
         },
         {
             "filename": "server_commands",
-            "critical": 0
+            "critical": 0,
+            "is_module": 0
+        },
+        {
+            "is_module": 1,
+            "module":"roles",
+            "subcogs":[
+                {
+                    "filename": "roles.categories",
+                    "critical": 1
+                },
+                {
+                    "filename": "roles.roles_handle",
+                    "critical": 1
+                },
+                {
+                    "filename": "roles.activation",
+                    "critical": 1
+                }
+            ]
         }
     ]
 }
