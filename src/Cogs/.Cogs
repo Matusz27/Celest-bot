@@ -54,7 +54,7 @@
                     "critical": 1
                 },
                 {
-                    "filename": "roles.roles_handle",
+                    "filename": "roles.roles",
                     "critical": 1
                 },
                 {

@@ -10,8 +10,16 @@ class pictures(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def pic(self, ctx, name):
+    async def pic(self, ctx, name=None):
         
+        if not name:
+            names = pictures_db.fetch_all_names()
+            msg = "Current pictures:\n"
+            for number, name in enumerate(names):
+                msg += f"{number + 1}.  {name[0]}\n"
+            await ctx.send(msg)
+            return
+                
         if not pictures_db.check_for_picture(name):
             await ctx.send("There is no such a picture!")
             return

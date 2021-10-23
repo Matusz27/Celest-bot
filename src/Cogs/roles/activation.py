@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from database_handle.roles_handle import role_servers
+from database_handle.roles_handle import servers_db
 
 
 
@@ -16,18 +16,18 @@ class active_desactivate(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def activate(self, ctx):
-        
-        guild_id = ctx.message.guild.id
-        
-        if role_servers.check_server(guild_id): 
-            msg = 'Roles cog arealdy activated. If you like to desactivete it use !desactivate'
-            await ctx.send(msg)
-            return
-        
-        role_servers.add(guild_id)
-        
-        msg = "Roles succesfuly activeted. Thank you for choosing GriffBot"
-        await ctx.send(msg)
+        try:
+            guild_id = ctx.message.guild.id
+            
+            if servers_db.check(guild_id): 
+                await ctx.send('Roles cog arealdy activated. If you like to desactivete it use !desactivate')
+                return
+            
+            servers_db.add(guild_id)
+            
+            await ctx.send("Roles succesfuly activeted. Thank you for choosing GriffBot")
+        except Exception as e:
+            print (e)
 
 
     @commands.command()

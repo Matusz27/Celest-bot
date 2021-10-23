@@ -1,14 +1,13 @@
-import psycopg2.extras
 from database_handle import conn
 
 
 with conn:
 
-    def check_server(server_id):
+    def check(server_id):
 
         with conn.cursor() as cursor:
-            sql = "Select id from guilds where server_id LIKE %s"
-            cursor.execute(sql, (server_id,))
+            sql = "Select id from guilds where server_id = %s"
+            cursor.execute(sql, (int(server_id),))
             data = cursor.fetchone()
             if data:
                 return data
@@ -17,5 +16,6 @@ with conn:
     def add(server_id):
         with conn.cursor() as cursor:
             sql = "INSERT INTO guilds(server_id) VALUES(%s)"
-            cursor.execute(sql, (server_id,))
+            cursor.execute(sql, (int(server_id),))
+            conn.commit()
         

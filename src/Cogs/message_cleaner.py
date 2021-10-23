@@ -24,8 +24,7 @@ class message_cleaner(commands.Cog):
             msg = f"Hey, hey! You trying to preen as many as {amount} feathery messages! You sure about it ? If so, use !yes if no !no"
             await ctx.send(msg, delete_after=20)
 
-        def who(msg): return msg.author == ctx.author
-        await ctx.channel.purge(limit=amount, check=who)
+        await ctx.channel.purge(limit=amount, check= lambda x: x.author == ctx.author)
         msg = f"Slowly and delicately, celest moved his beak through your hair or feathers, gently cleaning them, getting out some messages that were stuck there, after he was done {amount} of messages was pulled out of them"
         await ctx.send(msg, delete_after=40)
 
